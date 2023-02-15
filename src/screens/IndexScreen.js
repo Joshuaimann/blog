@@ -62,15 +62,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     borderColor: "black",
     borderWidth: 1,
+    marginBottom: 5
   },
   text: {
     fontSize: 20,
   },
   container: {
     marginTop: 50,
-    borderColor: "black",
-    borderWidth: 1,
-    borderBottomWidth: 0,
   },
 });
 

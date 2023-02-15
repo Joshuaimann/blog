@@ -14,34 +14,50 @@ const reducer = (state, action) => {
     case "Delete_Blog":
       return state.filter((blog) => blog.key !== action.payload.key);
     case "Edit_Blog":
-      var filteredState = state.filter((blog) => blog.key !== key);
-      filteredState.push({ blog: action.payload.blog });
-      return filteredState.sort((a, b) => {
-        return a.key - b.key;
-      });
+      // var filteredState = state.filter(
+      //   (blog) => blog.key !== action.payload.blog.key
+      // );
+      // filteredState.push({
+      //   title: action.payload.blog.title,
+      //   content: action.payload.blog.content,
+      //   key: action.payload.blog.key,
+      // });
+      // return filteredState.sort((a, b) => {
+      //   return a.key - b.key;
+      // });
+      return state.map(post => {
+        return post.key === action.payload.blog.key ? action.payload.blog : post
+      })
     default:
       return state;
   }
 };
 
 const addBlog = (dispatch) => {
-  return (title, content) => {
+  return (title, content, callback) => {
     dispatch({
       type: "Add_Blog",
-      payload: {blog: {title, content}}
+      payload: { blog: { title, content } },
     });
+    callback();
   };
 };
 
 const editBlog = (dispatch) => {
-  return (key, blog) => {
-    dispatch({ type: "Edit_Blog", payload: { blog, key } });
+  return (blog, callback) => {
+    dispatch({
+      type: "Edit_Blog",
+      payload: {
+        blog: { title: blog.title, content: blog.content, key: blog.key },
+      },
+    });
+    callback();
   };
 };
 
 const deleteBlog = (dispatch) => {
   return (key) => {
-    dispatch({ type: "Delete_Blog", payload: { key } });
+    dispatch({ type: "Delete_Blog", payload: { key: key } });
   };
 };
 
